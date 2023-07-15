@@ -16,7 +16,72 @@
         to this information, that their requests can be processed, and that all necessary data can be
         stored. <br>
     </p>
-
+    <table>
+        <thead>
+            <tr>
+                <th>REQUEST</th>
+                <th>HTTP Method</th>
+                <th>URL</th>
+                <th>RESPONSE</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Gets the list of data about ALL movies</td>
+                <td>GET</td>
+                <td>/movies</td>
+                <td>Return a list of all movies</td>
+            </tr>
+            <tr>
+                <td>Gets the data about a single movie</td>
+                <td>GET</td>
+                <td>/movies/:title</td>
+                <td>Return data about a movie by title</td>
+            </tr>
+            <tr>
+                <td>Gets the data about a Genre of movie</td>
+                <td>GET</td>
+                <td>/movies/genre/:genreName</td>
+                <td>Return data about a genre by name</td>
+            </tr>
+            <tr>
+                <td>Gets the data about a Director of movie</td>
+                <td>GET</td>
+                <td>/movies/director/:directorName</td>
+                <td>Return data about a director by name</td>
+            </tr>
+            <tr>
+                <td>adds new users</td>
+                <td>POST</td>
+                <td>/users</td>
+                <td>Allow new users to register</td>
+            </tr>
+            <tr>
+                <td>update user info.</td>
+                <td>PUT</td>
+                <td>/users/:id</td>
+                <td>Allow users to update their user info</td>
+            </tr>
+            <tr>
+                <td>Adds favoritemovie</td>
+                <td>POST</td>
+                <td>/users/:id/:movieTitle</td>
+                <td>Allow users to add a movie to their favorites</td>
+            </tr>
+            <tr>
+                <td>remove a movie from favorites</td>
+                <td>DELETE</td>
+                <td>/users/:id/:movieTitle</td>
+                <td>Allow users to remove a movie from their favorites</td>
+            </tr>
+            <tr>
+                <td>remove a user</td>
+                <td>DELETE</td>
+                <td>/users/:id</td>
+                <td>Allow existing users to deregister</td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 
 </html>
