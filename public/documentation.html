@@ -51,6 +51,30 @@
                 <td>Return data about a director by name</td>
             </tr>
             <tr>
+                <td>Gets the list of data about ALL users</td>
+                <td>GET</td>
+                <td>/users</td>
+                <td>Return list of users</td>
+            </tr>
+            <tr>
+                <td>Get a data about single user by username</td>
+                <td>GET</td>
+                <td>/users/:Username"</td>
+                <td>Returns user by username,Example:{
+
+                    "_id": "64b99ac23f43ff1e0c766aca",
+                    "Username": "Komal",
+                    "Password": "komal123",
+                    "Email": "komal@gmail.com",
+                    "BirthDate": "1996-08-11T00:00:00.000Z",
+                    "favoriteMovies": [
+                        "64b97e0f0f3b606a8237d3d4",
+                        "64b98ca73f43ff1e0c766ac1"
+                    ]
+                },
+                </td>
+            </tr>
+            <tr>
                 <td>adds new users</td>
                 <td>POST</td>
                 <td>/users</td>
@@ -78,7 +102,7 @@
                 <td>remove a user</td>
                 <td>DELETE</td>
                 <td>/users/:id</td>
-                <td>Allow existing users to deregister</td>
+                <td>Allow existing users to delete the registration</td>
             </tr>
         </tbody>
     </table>
