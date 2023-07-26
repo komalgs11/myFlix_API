@@ -3,10 +3,7 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const Models = require("./models.js");
-
 const passport = require('passport');
-
-
 
 const Movies = Models.Movie;
 const Users = Models.User;
@@ -18,13 +15,13 @@ mongoose.connect("mongodb://localhost:27017/cfDB", {
 
 const app = express();
 app.use(express.json());
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Authentification & Login Endpoint
-let auth = require("./auth")(app);
-require("./passport");
-
+// Authentification & Login Endpoit
+let auth = require('./auth')(app);
+require('./passport');
 
 app.get("/", (req, res) => {
   res.send("Welcome to myFlix!");
@@ -33,7 +30,7 @@ app.get("/", (req, res) => {
 // Gets the list of data about ALL movies
 app.get(
   "/movies",
-  passport.authenticate("jwt", { session: false }),
+  passport.authenticate('jwt', { session: false }),
   (req, res) => {
     Movies.find()
       .then((movies) => {
@@ -49,7 +46,7 @@ app.get(
 // Gets the data about a single movie, by title
 app.get(
   "/movies/:title",
-  passport.authenticate("jwt", { session: false }),
+  passport.authenticate('jwt', { session: false }),
   (req, res) => {
     Movies.findOne({ Title: req.params.title })
       .then((movies) => {
@@ -65,7 +62,7 @@ app.get(
 // Gets the data about a Genre of movie
 app.get(
   "/movies/genre/:genreName",
-  passport.authenticate("jwt", { session: false }),
+  passport.authenticate('jwt', { session: false }),
   (req, res) => {
     Movies.findOne({ "Genre.Name": req.params.genreName })
       .then((movie) => {
@@ -81,7 +78,7 @@ app.get(
 // Gets the data about a Director of movie
 app.get(
   "/movies/director/:directorName",
-  passport.authenticate("jwt", { session: false }),
+  passport.authenticate('jwt', { session: false }),
   (req, res) => {
     Movies.findOne({ "Director.Name": req.params.directorName })
       .then((movie) => {
@@ -96,6 +93,7 @@ app.get(
 
 // Gets the list of data about ALL users
 app.get("/users", (req, res) => {
+  passport.authenticate('jwt', { session: false }),
   Users.find()
     .then((users) => {
       res.status(200).json(users); // Send the topMovies array as JSON response
@@ -149,10 +147,10 @@ app.post("/users", (req, res) => {
 // update their user info
 app.put(
   "/users/:Username",
-  passport.authenticate("jwt", { session: false }),
+  passport.authenticate('jwt', { session: false }),
   (req, res) => {
     if (req.user.Username !== req.params.Username) {
-      return res.status(400).send("Permission denied");
+      return res.status(400).send('Permission denied');
     }
     Users.findOneAndUpdate(
       { Username: req.body.Username },
@@ -179,7 +177,7 @@ app.put(
 // Add favoritemovie
 app.post(
   "/users/:Username/movies/:MovieID",
-  passport.authenticate("jwt", { session: false }),
+  passport.authenticate('jwt', { session: false }),
   (req, res) => {
     Users.findOneAndUpdate(
       { Username: req.params.Username },
@@ -215,7 +213,6 @@ app.delete("/users/:Username/movies/:MovieID", (req, res) => {
 // Allow existing users to delete the registration
 app.delete(
   "/users/:Username",
-  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Users.findOneAndRemove({ Username: req.params.Username })
       .then((user) => {
