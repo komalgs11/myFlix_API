@@ -13,6 +13,5 @@ personal information, and create a list of their favorite movies.
 - Heroku
 
 # Goal
--User must be able to receive information on movies, directors, and genres so that they
-can learn more about movies.
--And able to create a profile to save data about favorite movies.
+User must be able to receive information on movies, directors, and genres so that they
+can learn more about movies also user can able to create a profile to save data about favorite movies.
