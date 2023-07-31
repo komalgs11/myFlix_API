@@ -9,10 +9,10 @@ const { check, validationResult } = require("express-validator");
 const Movies = Models.Movie;
 const Users = Models.User;
 
-mongoose.connect(process.env.CONNECTION_URI,{
+mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-})
+});
 
 // mongoose.connect("mongodb://localhost:27017/cfDB", {
 //   useNewUrlParser: true,
@@ -116,8 +116,10 @@ app.get(
 );
 
 // Gets the list of data about ALL users
-app.get("/users", (req, res) => {
+app.get(
+  "/users",
   passport.authenticate("jwt", { session: false }),
+  (req, res) => {
     Users.find()
       .then((users) => {
         res.status(200).json(users); // Send the topMovies array as JSON response
@@ -126,7 +128,8 @@ app.get("/users", (req, res) => {
         console.error(error);
         res.status(500).send("Error: " + error);
       });
-});
+  }
+);
 
 // Get a user by username
 app.get("/users/:Username", (req, res) => {
@@ -145,13 +148,15 @@ app.post(
   "/users",
   [
     check("Username", "Username is required").isLength({ min: 5 }),
-    check("Username","Username contains non alphanumeric characters - not allowed.").isAlphanumeric(),
+    check(
+      "Username",
+      "Username contains non alphanumeric characters - not allowed."
+    ).isAlphanumeric(),
     check("Password", "Password is required").not().isEmpty(),
     check("Email", "Email does not appear to be valid").isEmail(),
   ],
-  (req, res) => { 
-    
-    let errors = validationResult(req);   // check the validation object for errors
+  (req, res) => {
+    let errors = validationResult(req); // check the validation object for errors
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
@@ -283,6 +288,6 @@ app.use((err, req, res, next) => {
 
 // listen for requests
 const port = process.env.PORT || 8080;
-app.listen(port, '0.0.0.0',() => {
- console.log('Listening on Port ' + port);
+app.listen(port, "0.0.0.0", () => {
+  console.log("Listening on Port " + port);
 });
