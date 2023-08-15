@@ -197,17 +197,30 @@ app.post(
 // update their user info
 app.put(
   "/users/:Username",
+  [
+    check("Username", "Username is required").isLength({ min: 5 }),
+    check(
+      "Username",
+      "Username contains non alphanumeric characters - not allowed."
+    ).isAlphanumeric(),
+    check("Password", "Password is required").not().isEmpty(),
+    check("Email", "Email does not appear to be valid").isEmail(),
+  ],
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    if (req.user.Username !== req.params.Username) {
-      return res.status(400).send("Permission denied");
+    //check validation errors
+    let errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
     }
+    let hashedPassword = Users.hashPassword(req.body.Password);
+
     Users.findOneAndUpdate(
       { Username: req.body.Username },
       {
         $set: {
           Username: req.body.Username,
-          Password: req.body.Password,
+          Password: hashedPassword,
           Email: req.body.Email,
           BirthDate: req.body.BirthDate,
         },
@@ -215,8 +228,13 @@ app.put(
       { new: true }
     ) // This line makes sure that the updated document is returned
       .then((updatedUser) => {
-        res.json(updatedUser);
+        if (!updatedUser) {
+          return res.status(404).send("Error: No user was found");
+        } else {
+          res.json(updatedUser);
+        }
       })
+
       .catch((error) => {
         console.error(error);
         res.status(500).send("Error: " + error);
