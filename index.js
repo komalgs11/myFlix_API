@@ -197,6 +197,7 @@ app.post(
 // update their user info
 app.put(
   "/users/:Username",
+  passport.authenticate("jwt", { session: false }),
   [
     check("Username", "Username is required").isLength({ min: 5 }),
     check(
@@ -206,7 +207,6 @@ app.put(
     check("Password", "Password is required").not().isEmpty(),
     check("Email", "Email does not appear to be valid").isEmail(),
   ],
-  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     //check validation errors
     let errors = validationResult(req);
@@ -216,7 +216,7 @@ app.put(
     let hashedPassword = Users.hashPassword(req.body.Password);
 
     Users.findOneAndUpdate(
-      { Username: req.body.Username },
+      { Username: req.params.Username },
       {
         $set: {
           Username: req.body.Username,
