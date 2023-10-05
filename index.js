@@ -26,9 +26,9 @@ const cors = require("cors");
 let allowedOrigins = [
   "http://localhost:8080",
   "http://localhost:1234",
-  "http://testsite.com",
   "https://movies-myflix.netlify.app",
   "http://localhost:4200",
+  "https://mymoviesflix-415489b92353.herokuapp.com",
 ];
 app.use(
   cors({
