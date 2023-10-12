@@ -29,6 +29,7 @@ let allowedOrigins = [
   "https://movies-myflix.netlify.app",
   "http://localhost:4200",
   "https://mymoviesflix-415489b92353.herokuapp.com",
+  "https://komalgs11.github.io/myFlix-Angular-client/welcome",
 ];
 app.use(
   cors({
