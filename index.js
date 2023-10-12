@@ -24,12 +24,11 @@ app.use(express.json());
 
 const cors = require("cors");
 let allowedOrigins = [
-  "http://localhost:8080",
-  "http://localhost:1234",
   "https://movies-myflix.netlify.app",
   "http://localhost:4200",
   "https://mymoviesflix-415489b92353.herokuapp.com",
   "https://komalgs11.github.io/myFlix-Angular-client/welcome",
+  "https://komalgs11.github.io",
 ];
 app.use(
   cors({
