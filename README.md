@@ -7,7 +7,7 @@ personal information, and create a list of their favorite movies.
 # Technologies used
 
 - Node.js
-- Express application
+- Express
 - mongoDB Database
 - Postman
 - Heroku
